@@ -1,5 +1,5 @@
 import sys
-from mpileLineTemp import mpileLineTemp
+from mpileLine import mpileLine
 from mpSample import mpSample
 import traceback
 import subprocess
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     with open(mpile_in) as mp_file:
         for line in mp_file:
             try:
-                mpLine = mpileLineTemp(line)
+                mpLine = mpileLine(line)
                 mutant = mpLine.getMutant()
                 
                 if mpLine.chrom not in "pseudo0mitochondrionchloroplast":
