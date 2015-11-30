@@ -1,7 +1,7 @@
 from mpSample import mpSample
 import re
 
-class mpileLineTemp:
+class mpileLine:
 
     def __init__(self,raw_line):
         self.sline = raw_line.replace(" ","\t").split("\t") 
