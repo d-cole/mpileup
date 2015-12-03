@@ -8,6 +8,7 @@ CC_smpls = ["CC_A","CC_B","CC_C","CC_D","CC_E","CC_F","CC_H","CC_I","CC_J","CC_K
 GP_smpls = ["GP_A","GP_B","GP_C","GP_D","GP_E","GP_F","GP_G","GP_H","GP_I","GP_J","GP_K","GP_L","GP_M","GP_N","GP_O","GP_P"]
 idList = None
 counts = {}
+
 if __name__ == "__main__":
     mpile_in,out_file = sys.argv[1],sys.argv[2]
     outFile = open(out_file,"w")   
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     #Assign idList to one of CC or GP smples
     if "CC" in mpile_in:
        idList = CC_smpls 
-    else if "GP" in mpile_in:
+    elif "GP" in mpile_in:
         idList = GP_smpls
     else:
         print "Error incorrect mpile_in name"
@@ -37,7 +38,8 @@ if __name__ == "__main__":
                 print line
     
     #Write out counts dict to outFile          
-    
+    for key in counts.keys():
+        outFile.write(str(key) + ":" + str(counts[key]) + "\n")
     
          
     outFile.close()
