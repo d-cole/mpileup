@@ -11,10 +11,22 @@ class mpileLine:
         self.refBase = self.sline[2]
         self.siteID = self.chrom + ":" + self.pos
         self.mutantSample = None
+        self.mutantIDX = None
         self.samples = []
         self.loadSamples()
         self.loadMutant()
         return
+    
+    def getMutantID(self, IDlist):
+        """
+        Returns the sample name of the mutant given a list of 
+            sample names corresponding to the order ran through mpileup.
+        """
+        if self.mutantIDX == None:
+            return "None"
+
+        return IDlist[self.mutantIDX]
+
 
     def loadSamples(self):
         i = 3 
@@ -43,15 +55,24 @@ class mpileLine:
         """
         Assigns self.mutantSample to the sample with the most alt reads
         """
-        max_reads = 0
-        for sample in self.samples:
-
-            if sample.majorAltBaseCount > max_reads:
+#        max_reads = 0
+#        for sample in self.samples:
+#
+#            if sample.majorAltBaseCount > max_reads:
 #                print str(sample.majorAltBaseCount) + " > " + str(max_reads)
-                self.mutantSample = sample
-                max_reads = sample.majorAltBaseCount
+#                self.mutantSample = sample
+#                max_reads = sample.majorAltBaseCount
 #            else:
 #                print str(sample.majorAltBaseCount) + " < " + str(max_reads)
+
+        max_reads = 0
+        for i in range(0,len(self.samples)):
+            if self.samples[i].majorAltBaseCount > max_reads:
+                self.mutantSample = self.samples[i]
+                self.mutantIDX = i
+
+        return
+
 
     def repr(self):
         """
@@ -62,8 +83,6 @@ class mpileLine:
         repr_str = repr_str + self.raw_line + "\n"
         for s in self.samples:
             repr_str = repr_str + s.repr()
-
-
 
         return repr_str 
 
