@@ -33,7 +33,6 @@ class mpileLine:
         while i < len(self.sline):
             sample = mpSample(self.sline[i:i+4])
             self.samples.append(sample)
-#            print sample.__repr__()
             i += 4
         return 
 
@@ -68,8 +67,12 @@ class mpileLine:
         max_reads = 0
         for i in range(0,len(self.samples)):
             if self.samples[i].majorAltBaseCount > max_reads:
+                max_reads = self.samples[i].majorAltBaseCount
                 self.mutantSample = self.samples[i]
                 self.mutantIDX = i
+        
+        #if self.mutantSample == None:
+        #    print "No alternate reads found in any sample"        
 
         return
 
