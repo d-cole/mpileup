@@ -4,15 +4,29 @@ from mpSample import mpSample
 import traceback
 import subprocess
 
-CC_smpls = ["CC_A","CC_B","CC_C","CC_D","CC_E","CC_F","CC_H","CC_I","CC_J","CC_K","CC_L","CC_N","CC_O","CC_P"]
-GP_smpls = ["GP_A","GP_B","GP_C","GP_D","GP_E","GP_F","GP_G","GP_H","GP_I","GP_J","GP_K","GP_L","GP_M","GP_N","GP_O","GP_P"]
+new_CC_smpls = ["CC_A","CC_B","CC_C","CC_D","CC_E","CC_F","CC_H","CC_I","CC_J","CC_K","CC_L","CC_N","CC_O","CC_P"]
+new_GP_smpls = ["GP_A","GP_B","GP_C","GP_D","GP_E","GP_F","GP_G","GP_H","GP_I","GP_J","GP_K","GP_L","GP_M","GP_N","GP_O","GP_P"]
+
+old_CC_smpls = ["CC_B","CC_C","CC_D","CC_E","CC_F","CC_H","CC_I","CC_J","CC_K","CC_L","CC_N","CC_O"]
+old_GP_smpls = ["GP_B","GP_C","GP_D","GP_E","GP_F","GP_G","GP_H","GP_I","GP_J","GP_K","GP_L","GP_M","GP_N","GP_O"]
+
+
+
 idList = None
 counts = {}
 
 if __name__ == "__main__":
-    mpile_in,out_file = sys.argv[1],sys.argv[2]
+    mpile_in,out_file,old_new_sample = sys.argv[1],sys.argv[2],sys.argv[3]
     outFile = open(out_file,"w")   
     
+    if old_new_sample == "old":
+        CC_smpls = new_CC_smpls
+        GP_smpls = new_GP_smpls
+
+    if old_new_sample == "new":
+        CC_smpls = old_CC_smpls
+        GP_smpls = old_GP_smpls
+ 
     #Assign idList to one of CC or GP smples
     if "CC" in mpile_in:
        idList = CC_smpls 

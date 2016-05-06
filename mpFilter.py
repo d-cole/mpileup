@@ -46,8 +46,9 @@ def passBinom(mutant):
 
 
 if __name__ == "__main__":
-    mpile_in,mpile_out = sys.argv[1],sys.argv[2]
+    mpile_in,mpile_out,no_mutant = sys.argv[1],sys.argv[2],sys.argv[3]
     outFile = open(mpile_out,"w")   
+    no_mut = open(no_mutant,"w")    
  
     with open(mpile_in) as mp_file:
         for line in mp_file:
@@ -56,14 +57,20 @@ if __name__ == "__main__":
                 mutant = mpLine.getMutant()
                 
                 if mpLine.chrom not in "pseudo0mitochondrionchloroplast":
-    #                print mutant.__repr__()
+
+                        #No mutant at this site
+                        if mutant == None:
+                            no_mut.write(line)
+                            continue
+
                         if mutant.altReadCount(30) >= 3:
                             if mutant.altReadBothStrands(30):
                             #if mutant.altReadBothStrands():
+
                                 if maxFreqAltOtherSamples(mutant,mpLine.samples,0.02):
-                                    #print "pass max freq other samples"
+
                                     if passBinom(mutant):
-                                        #print "passed binom test
+
                                         outFile.write(line)
         
             except:
@@ -71,7 +78,7 @@ if __name__ == "__main__":
                 print traceback.format_exc()
                 print line
              
-            
+    no_mut.close() 
     outFile.close()
 
 
