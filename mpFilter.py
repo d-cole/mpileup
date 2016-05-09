@@ -3,6 +3,7 @@ from mpileLine import mpileLine
 from mpSample import mpSample
 import traceback
 import subprocess
+from pyBinom import pbinom
 
 def maxFreqAltOtherSamples(mutant,allSamples,freq):
     """
@@ -29,6 +30,7 @@ def maxFreqAltOtherSamples(mutant,allSamples,freq):
 #
     return freqAltOther < freq
 
+
 def passBinom(mutant):
     """
     
@@ -38,17 +40,21 @@ def passBinom(mutant):
 #    print "alt: " + str(altReads)
 #    print "ref: " + str(refReads)
 
-
-    binomResult = "TRUE" in str((subprocess.Popen("~/spirodela/r/binom.r " + str(altReads)\
-             +" "+str(refReads),shell=True,stdout=subprocess.PIPE)).communicate()[0])
-
-    return binomResult
-
+    return pbinom(altReads,refReads,0.5) > 0.02
+#    binomResult = "TRUE" in str((subprocess.Popen("~/spirodela/r/binom.r " + str(altReads)\
+#             +" "+str(refReads),shell=True,stdout=subprocess.PIPE)).communicate()[0])
+#
+#    return binomResult
+#
 
 if __name__ == "__main__":
-    mpile_in,mpile_out,no_mutant = sys.argv[1],sys.argv[2],sys.argv[3]
+    mpile_in,mpile_out = sys.argv[1],sys.argv[2]
+#    no_mutant = sys.argv[3]
+
     outFile = open(mpile_out,"w")   
-    no_mut = open(no_mutant,"w")    
+    #no_mut = open(no_mutant,"w")    
+
+    min_alt = int(sys.argv[3])
  
     with open(mpile_in) as mp_file:
         for line in mp_file:
@@ -59,13 +65,12 @@ if __name__ == "__main__":
                 if mpLine.chrom not in "pseudo0mitochondrionchloroplast":
 
                         #No mutant at this site
-                        if mutant == None:
-                            no_mut.write(line)
-                            continue
+                       # if mutant == None:
+                       #     no_mut.write(line)
+                       #     continue
 
-                        if mutant.altReadCount(30) >= 3:
+                        if mutant.altReadCount(30) >= min_alt:
                             if mutant.altReadBothStrands(30):
-                            #if mutant.altReadBothStrands():
 
                                 if maxFreqAltOtherSamples(mutant,mpLine.samples,0.02):
 
@@ -74,11 +79,12 @@ if __name__ == "__main__":
                                         outFile.write(line)
         
             except:
+                print "ERROR"
                 print sys.exc_info()[0] 
                 print traceback.format_exc()
                 print line
              
-    no_mut.close() 
+    #no_mut.close() 
     outFile.close()
 
 
