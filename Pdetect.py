@@ -1,3 +1,7 @@
+"""
+Pdetect: http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002419 (Sharp & Agrawal)
+"""
+
 from mpileLine import mpileLine
 from mpSample import mpSample
 from scipy.stats.distributions import binom
