@@ -29,7 +29,45 @@ class mpSample:
         self.__maskBaseString()
         self.__getBasePositions()
         self.__getMajorAltBase()
+
+
+    def get_num_fwd_reads(self):
+        """ Returns the number of fwd reads covering this site
+
+        Args:
+            self: mpSample object
+
+        Returns:
+           fwd_count: Number of fwd bases, type int
+        """
+        fwd_bases = "ATCGN"
+        fwd_count = 0
+
+        for char in self.bases_masked:
+            if char in fwd_bases:
+                fwd_count += 1
+
+        return fwd_count
+
+    def get_num_rev_reads(self):
+        """ Returns the number of reverse reads covering this site
     
+        Args:
+            self: mpSample object
+
+        Returns:
+            rev_count: Number of rev bases, type int
+        """
+        rev_bases = "atcgn"
+        rev_count = 0
+
+        for char in self.bases_masked:
+            if char in rev_bases:
+                rev_count += 1
+
+        return rev_count
+
+   
     def __getIndelLength(self,baseString,indelIndicatorPos):
         """
         Returns the length of the indel
@@ -135,7 +173,6 @@ class mpSample:
                 good_base += 1
 
         return good_base
-
 
 
     def altReadBothStrands(self,min_qual=0):# -- bool
