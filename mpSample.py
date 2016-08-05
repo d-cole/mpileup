@@ -40,7 +40,7 @@ class mpSample:
         Returns:
            fwd_count: Number of fwd bases, type int
         """
-        fwd_bases = "ATCGN"
+        fwd_bases = "ATCGN."
         fwd_count = 0
 
         for char in self.bases_masked:
@@ -58,7 +58,7 @@ class mpSample:
         Returns:
             rev_count: Number of rev bases, type int
         """
-        rev_bases = "atcgn"
+        rev_bases = "atcgn,"
         rev_count = 0
 
         for char in self.bases_masked:
@@ -114,9 +114,9 @@ class mpSample:
 
         if len(self.baseQualities) != len(self.bases_masked):
             print "basemask"
-            #print str(self.bases)
-            #print str(self.bases_masked)
-            #print str(self.baseQualities)
+            print "unmasked length", str(self.bases)
+            print "masked lenth", str(self.bases_masked)
+            print "qual length", str(self.baseQualities)
         return
     
     def __getBasePositions(self):

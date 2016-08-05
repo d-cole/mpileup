@@ -4,7 +4,7 @@ import re
 class mpileLine:
 
     def __init__(self,raw_line):
-        self.sline = raw_line.replace(" ","\t").split("\t") 
+        self.sline = raw_line.split()
         self.raw_line = raw_line
         self.chrom = self.sline[0]
         self.pos = self.sline[1]

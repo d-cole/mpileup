@@ -54,7 +54,7 @@ if __name__ == "__main__":
     outFile = open(mpile_out,"w")   
     #no_mut = open(no_mutant,"w")    
 
-    min_alt = int(sys.argv[3])
+    min_alt = 3
  
     with open(mpile_in) as mp_file:
         for line in mp_file:
@@ -65,9 +65,9 @@ if __name__ == "__main__":
                 if mpLine.chrom not in "pseudo0mitochondrionchloroplast":
 
                         #No mutant at this site
-                       # if mutant == None:
-                       #     no_mut.write(line)
-                       #     continue
+                        if mutant == None:
+     #                       no_mut.write(line)
+                            continue
 
                         if mutant.altReadCount(30) >= min_alt:
                             if mutant.altReadBothStrands(30):
